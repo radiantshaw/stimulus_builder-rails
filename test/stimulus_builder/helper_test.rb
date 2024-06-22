@@ -13,8 +13,21 @@ class StimulusBuilder::HelperTest < ActionView::TestCase
 
   def test_multiple_controller_declaration
     assert_equal(
-      stimulated.div(controlled_by: ["slider", "display"]),
-      '<div data-controller="slider display"></div>'
+      '<div data-controller="slider display"></div>',
+      stimulated.div(controlled_by: ["slider", "display"])
     )
+  end
+
+  def test_default_action_declaration
+    actual =
+      stimulated.div(controlled_by: "slider") do |slider, _element|
+        _element.fire(slider.step)
+      end
+
+    expected = <<~HTML.chomp
+      <div data-controller="slider" data-action="slider#step"></div>
+    HTML
+
+    assert_equal(expected, actual)
   end
 end
