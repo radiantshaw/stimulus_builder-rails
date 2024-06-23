@@ -1,7 +1,7 @@
 class StimulusBuilder::ActionDescriptor
-  def initialize(event, handler, target = nil)
+  def initialize(event, handler, target = nil, **options)
     @event, @handler = event, handler
-    @target = target
+    @target, @options = target, options
   end
 
   def to_s
@@ -17,6 +17,20 @@ class StimulusBuilder::ActionDescriptor
       descriptor += "->"
     end
 
-    descriptor + "#{@handler}" 
+
+    descriptor + "#{@handler}" + processed_options
+  end
+
+  private
+
+  def processed_options
+    @options.inject("") do |processed_options, (option, condition)|
+      processed_options +=
+        if condition == true
+          ":#{option}"
+        elsif condition == false
+          ":!#{option}"
+        end
+    end
   end
 end

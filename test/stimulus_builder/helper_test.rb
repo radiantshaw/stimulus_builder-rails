@@ -116,4 +116,18 @@ class StimulusBuilder::HelperTest < ActionView::TestCase
 
     assert_equal(expected, actual)
   end
+
+  def test_action_options
+    actual =
+      stimulated.div(controlled_by: "slider") do |slider, _element|
+        _element.fire(slider.step, stop: true)
+        _element.on('hover', slider.slide, stop: true, passive: false)
+      end
+
+    expected = <<~HTML.chomp
+      <div data-controller="slider" data-action="slider#step:stop hover->slider#slide:stop:!passive"></div>
+    HTML
+
+    assert_equal(expected, actual)
+  end
 end

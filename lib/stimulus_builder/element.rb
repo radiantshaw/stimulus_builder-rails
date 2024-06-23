@@ -9,11 +9,11 @@ class StimulusBuilder::Element
     @action_descriptors = []
   end
 
-  def fire(handler)
-    @action_descriptors << StimulusBuilder::ActionDescriptor.new(nil, handler)
+  def fire(handler, **options)
+    @action_descriptors << StimulusBuilder::ActionDescriptor.new(nil, handler, **options)
   end
 
-  def on(event, handler, attach_to: nil)
-    @action_descriptors << StimulusBuilder::ActionDescriptor.new(event, handler, attach_to)
+  def on(event, handler, attach_to: nil, **options)
+    @action_descriptors << StimulusBuilder::ActionDescriptor.new(event, handler, attach_to, **options)
   end
 end
