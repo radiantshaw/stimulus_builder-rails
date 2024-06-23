@@ -57,4 +57,49 @@ class StimulusBuilder::HelperTest < ActionView::TestCase
 
     assert_equal(expected, actual)
   end
+
+  def test_multiple_action_declaration_with_event
+    actual =
+      stimulated.div(controlled_by: "slider") do |slider, _element|
+        _element.on('click', slider.step)
+        _element.on('hover', slider.slide)
+      end
+
+    expected = <<~HTML.chomp
+      <div data-controller="slider" data-action="click->slider#step hover->slider#slide"></div>
+    HTML
+
+    assert_equal(expected, actual)
+  end
+
+  def test_action_declaration_with_and_without_event
+    actual =
+      stimulated.div(controlled_by: "slider") do |slider, _element|
+        _element.fire(slider.step)
+        _element.on('hover', slider.slide)
+      end
+
+    expected = <<~HTML.chomp
+      <div data-controller="slider" data-action="slider#step hover->slider#slide"></div>
+    HTML
+
+    assert_equal(expected, actual)
+  end
+
+  def test_mix_of_multiple_controllers_and_actions_with_and_without_event
+    actual =
+      stimulated.div(controlled_by: ["slider", "display"]) do |slider, display, _element|
+        _element.fire(slider.step)
+        _element.on('hover', slider.slide)
+
+        _element.fire(display.toggle)
+        _element.on('change', display.clear)
+      end
+
+    expected = <<~HTML.chomp
+      <div data-controller="slider display" data-action="slider#step hover->slider#slide display#toggle change->display#clear"></div>
+    HTML
+
+    assert_equal(expected, actual)
+  end
 end
