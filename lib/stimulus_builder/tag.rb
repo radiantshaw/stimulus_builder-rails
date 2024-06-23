@@ -1,4 +1,3 @@
-require "debug"
 require "stimulus_builder/controller"
 require "stimulus_builder/element"
 require "stimulus_builder/stimulus_attributes"
