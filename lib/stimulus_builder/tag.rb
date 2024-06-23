@@ -1,6 +1,7 @@
 require "stimulus_builder/controller"
-require "stimulus_builder/declarations"
 require "stimulus_builder/element"
+require "stimulus_builder/stimulus_attributes"
+require "stimulus_builder/controller_attribute"
 require "stimulus_builder/action_attribute"
 
 class StimulusBuilder::Tag
@@ -18,14 +19,12 @@ class StimulusBuilder::Tag
 
     yield(*controllers, element) if block_given?
 
-    declarations = StimulusBuilder::Declarations.new(controllers)
-    action_attribute = StimulusBuilder::ActionAttribute.new(element.handlers)
+    stimulus_attributes =
+      StimulusBuilder::StimulusAttributes.new([
+        StimulusBuilder::ControllerAttribute.new(controllers),
+        StimulusBuilder::ActionAttribute.new(element.handlers)
+      ])
 
-    @builder_context.div(
-      data: {
-        **declarations.to_h,
-        **action_attribute.to_h
-      }
-    )
+    @builder_context.div(data: stimulus_attributes.to_h)
   end
 end

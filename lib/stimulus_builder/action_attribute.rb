@@ -3,17 +3,11 @@ class StimulusBuilder::ActionAttribute
     @handlers = handlers
   end
 
-  def to_h
-    if @handlers.length > 0
-      { action: handler_identifiers }
-    else
-      {}
-    end
+  def name
+    :action
   end
 
-  private
-
-  def handler_identifiers
+  def value
     @handlers.join(" ")
   end
 end
