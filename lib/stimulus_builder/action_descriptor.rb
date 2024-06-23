@@ -1,15 +1,22 @@
 class StimulusBuilder::ActionDescriptor
-  def initialize(event, handler)
+  def initialize(event, handler, target = nil)
     @event, @handler = event, handler
+    @target = target
   end
 
   def to_s
-    descriptor = "#{@handler}" 
+    descriptor = ""
 
     if @event.present?
-      descriptor.prepend("#{@event}->")
+      descriptor += @event
+
+      if @target.present?
+        descriptor += "@#{@target}"
+      end
+
+      descriptor += "->"
     end
 
-    descriptor
+    descriptor + "#{@handler}" 
   end
 end

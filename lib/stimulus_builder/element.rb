@@ -13,7 +13,7 @@ class StimulusBuilder::Element
     @action_descriptors << StimulusBuilder::ActionDescriptor.new(nil, handler)
   end
 
-  def on(event, handler)
-    @action_descriptors << StimulusBuilder::ActionDescriptor.new(event, handler)
+  def on(event, handler, attach_to: nil)
+    @action_descriptors << StimulusBuilder::ActionDescriptor.new(event, handler, attach_to)
   end
 end

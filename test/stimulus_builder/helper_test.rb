@@ -102,4 +102,18 @@ class StimulusBuilder::HelperTest < ActionView::TestCase
 
     assert_equal(expected, actual)
   end
+
+  def test_global_event_attachment
+    actual =
+      stimulated.div(controlled_by: "slider") do |slider, _element|
+        _element.on('click', slider.step, attach_to: 'document')
+        _element.on('hover', slider.slide, attach_to: 'window')
+      end
+
+    expected = <<~HTML.chomp
+      <div data-controller="slider" data-action="click@document->slider#step hover@window->slider#slide"></div>
+    HTML
+
+    assert_equal(expected, actual)
+  end
 end
