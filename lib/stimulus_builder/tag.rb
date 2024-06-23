@@ -1,3 +1,4 @@
+require "debug"
 require "stimulus_builder/controller"
 require "stimulus_builder/element"
 require "stimulus_builder/stimulus_attributes"
@@ -22,7 +23,7 @@ class StimulusBuilder::Tag
     stimulus_attributes =
       StimulusBuilder::StimulusAttributes.new([
         StimulusBuilder::ControllerAttribute.new(controllers),
-        StimulusBuilder::ActionAttribute.new(element.handlers)
+        StimulusBuilder::ActionAttribute.new(element.action_descriptors)
       ])
 
     @builder_context.div(data: stimulus_attributes.to_h)

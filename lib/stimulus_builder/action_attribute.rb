@@ -1,6 +1,6 @@
 class StimulusBuilder::ActionAttribute
-  def initialize(handlers)
-    @handlers = handlers
+  def initialize(action_descriptors)
+    @action_descriptors = action_descriptors
   end
 
   def name
@@ -8,6 +8,6 @@ class StimulusBuilder::ActionAttribute
   end
 
   def value
-    @handlers.join(" ")
+    @action_descriptors.join(" ").html_safe
   end
 end
