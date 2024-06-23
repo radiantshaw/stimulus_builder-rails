@@ -1,7 +1,7 @@
-require "stimulus_builder/element"
+require "stimulus_builder/tag"
 
 module StimulusBuilder::Helper
   def stimulated
-    StimulusBuilder::Element.new(tag)
+    StimulusBuilder::Tag.new(tag)
   end
 end

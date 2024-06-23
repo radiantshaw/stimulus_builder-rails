@@ -1,19 +1,19 @@
-require "stimulus_builder/controller"
-require "stimulus_builder/declarations"
+require "stimulus_builder/action_descriptor"
 
 class StimulusBuilder::Element
-  def initialize(builder_context)
-    @builder_context = builder_context
+  attr_reader :handlers
+  attr_reader :action_descriptors
+
+  def initialize
+    @handlers = []
+    @action_descriptors = []
   end
 
-  def div(controlled_by:)
-    controllers =
-      Array.wrap(controlled_by).map do |controller_identifier|
-        StimulusBuilder::Controller.new(controller_identifier)
-      end
+  def fire(handler, **options)
+    @action_descriptors << StimulusBuilder::ActionDescriptor.new(nil, handler, **options)
+  end
 
-    declarations = StimulusBuilder::Declarations.new(controllers)
-
-    @builder_context.div(data: declarations.to_h)
+  def on(event, handler, attach_to: nil, **options)
+    @action_descriptors << StimulusBuilder::ActionDescriptor.new(event, handler, attach_to, **options)
   end
 end
