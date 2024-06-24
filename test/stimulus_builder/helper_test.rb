@@ -60,6 +60,34 @@ class StimulusBuilder::HelperTest < ActionView::TestCase
     )
   end
 
+  def test_modular_single_controller
+    assert_equal(
+      '<div data-controller="slider--zoom"></div>',
+      stimulated.div(controlled_by: "slider/zoom")
+    )
+  end
+
+  def test_multi_word_modular_single_controller
+    assert_equal(
+      '<div data-controller="slick-slider--linear-zoom"></div>',
+      stimulated.div(controlled_by: "slick_slider/linear_zoom")
+    )
+  end
+
+  def test_modular_multiple_controller
+    assert_equal(
+      '<div data-controller="slider--zoom toggle--display"></div>',
+      stimulated.div(controlled_by: ["slider/zoom", "toggle/display"])
+    )
+  end
+
+  def test_multi_word_modular_multiple_controller
+    assert_equal(
+      '<div data-controller="slick-slider--linear-zoom visibility-toggle--clear-display"></div>',
+      stimulated.div(controlled_by: ["slick_slider/linear_zoom", "visibility_toggle/clear_display"])
+    )
+  end
+
   def test_single_default_action_declaration
     actual =
       stimulated.div(controlled_by: "slider") do |slider, _element|
