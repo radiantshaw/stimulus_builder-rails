@@ -18,7 +18,14 @@ class StimulusBuilder::HelperTest < ActionView::TestCase
     )
   end
 
-  def test_multiple_controller_declaration
+  def test_multiple_controller_symbols
+    assert_equal(
+      '<div data-controller="slider display"></div>',
+      stimulated.div(controlled_by: [:slider, :display])
+    )
+  end
+
+  def test_multiple_controller_strings
     assert_equal(
       '<div data-controller="slider display"></div>',
       stimulated.div(controlled_by: ["slider", "display"])
