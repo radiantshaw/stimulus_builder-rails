@@ -32,6 +32,34 @@ class StimulusBuilder::HelperTest < ActionView::TestCase
     )
   end
 
+  def test_multi_word_single_controller_symbol
+    assert_equal(
+      '<div data-controller="zoom-slider"></div>',
+      stimulated.div(controlled_by: :zoom_slider)
+    )
+  end
+
+  def test_multi_word_single_controller_string
+    assert_equal(
+      '<div data-controller="zoom-slider"></div>',
+      stimulated.div(controlled_by: "zoom_slider")
+    )
+  end
+
+  def test_multi_word_multiple_controller_symbols
+    assert_equal(
+      '<div data-controller="zoom-slider display-toggle"></div>',
+      stimulated.div(controlled_by: [:zoom_slider, :display_toggle])
+    )
+  end
+
+  def test_multi_word_multiple_controller_strings
+    assert_equal(
+      '<div data-controller="zoom-slider display-toggle"></div>',
+      stimulated.div(controlled_by: ["zoom_slider", "display_toggle"])
+    )
+  end
+
   def test_single_default_action_declaration
     actual =
       stimulated.div(controlled_by: "slider") do |slider, _element|
