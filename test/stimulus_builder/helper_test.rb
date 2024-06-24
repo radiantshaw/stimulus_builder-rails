@@ -4,59 +4,41 @@ require "stimulus_builder/helper"
 class StimulusBuilder::HelperTest < ActionView::TestCase
   include StimulusBuilder::Helper
 
-  def test_single_controller_symbol
+  def test_single_controller
     assert_equal(
       '<div data-controller="slider"></div>',
       stimulated.div(controlled_by: :slider)
     )
-  end
 
-  def test_single_controller_string
     assert_equal(
       '<div data-controller="slider"></div>',
       stimulated.div(controlled_by: "slider")
     )
   end
 
-  def test_multiple_controller_symbols
+  def test_multiple_controllers
     assert_equal(
       '<div data-controller="slider display"></div>',
-      stimulated.div(controlled_by: [:slider, :display])
+      stimulated.div(controlled_by: [:slider, "display"])
     )
   end
 
-  def test_multiple_controller_strings
-    assert_equal(
-      '<div data-controller="slider display"></div>',
-      stimulated.div(controlled_by: ["slider", "display"])
-    )
-  end
-
-  def test_multi_word_single_controller_symbol
+  def test_multi_word_single_controller
     assert_equal(
       '<div data-controller="zoom-slider"></div>',
       stimulated.div(controlled_by: :zoom_slider)
     )
-  end
 
-  def test_multi_word_single_controller_string
     assert_equal(
       '<div data-controller="zoom-slider"></div>',
       stimulated.div(controlled_by: "zoom_slider")
     )
   end
 
-  def test_multi_word_multiple_controller_symbols
+  def test_multi_word_multiple_controllers
     assert_equal(
       '<div data-controller="zoom-slider display-toggle"></div>',
-      stimulated.div(controlled_by: [:zoom_slider, :display_toggle])
-    )
-  end
-
-  def test_multi_word_multiple_controller_strings
-    assert_equal(
-      '<div data-controller="zoom-slider display-toggle"></div>',
-      stimulated.div(controlled_by: ["zoom_slider", "display_toggle"])
+      stimulated.div(controlled_by: [:zoom_slider, "display_toggle"])
     )
   end
 
@@ -65,26 +47,17 @@ class StimulusBuilder::HelperTest < ActionView::TestCase
       '<div data-controller="slider--zoom"></div>',
       stimulated.div(controlled_by: "slider/zoom")
     )
-  end
 
-  def test_multi_word_modular_single_controller
     assert_equal(
       '<div data-controller="slick-slider--linear-zoom"></div>',
       stimulated.div(controlled_by: "slick_slider/linear_zoom")
     )
   end
 
-  def test_modular_multiple_controller
+  def test_modular_multiple_controllers
     assert_equal(
-      '<div data-controller="slider--zoom toggle--display"></div>',
-      stimulated.div(controlled_by: ["slider/zoom", "toggle/display"])
-    )
-  end
-
-  def test_multi_word_modular_multiple_controller
-    assert_equal(
-      '<div data-controller="slick-slider--linear-zoom visibility-toggle--clear-display"></div>',
-      stimulated.div(controlled_by: ["slick_slider/linear_zoom", "visibility_toggle/clear_display"])
+      '<div data-controller="slick-slider--linear-zoom toggle--display tab--tab-panel--tab-trigger"></div>',
+      stimulated.div(controlled_by: ["slick_slider/linear_zoom", "toggle/display", "tab/tab_panel/tab_trigger"])
     )
   end
 
