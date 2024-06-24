@@ -4,7 +4,14 @@ require "stimulus_builder/helper"
 class StimulusBuilder::HelperTest < ActionView::TestCase
   include StimulusBuilder::Helper
 
-  def test_single_controller_declaration
+  def test_single_controller_symbol
+    assert_equal(
+      '<div data-controller="slider"></div>',
+      stimulated.div(controlled_by: :slider)
+    )
+  end
+
+  def test_single_controller_string
     assert_equal(
       '<div data-controller="slider"></div>',
       stimulated.div(controlled_by: "slider")
