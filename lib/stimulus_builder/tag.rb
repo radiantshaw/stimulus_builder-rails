@@ -27,4 +27,11 @@ class StimulusBuilder::Tag
 
     @builder_context.div(data: stimulus_attributes.to_h)
   end
+
+  def div2(&block)
+    element = StimulusBuilder::Element.new
+    yield(element)
+
+    @builder_context.div(data: element.attributes)
+  end
 end

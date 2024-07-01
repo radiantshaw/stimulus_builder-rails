@@ -1,4 +1,5 @@
 require "stimulus_builder/action_descriptor"
+require "stimulus_builder/controller_attribute"
 
 class StimulusBuilder::Element
   attr_reader :handlers
@@ -7,6 +8,24 @@ class StimulusBuilder::Element
   def initialize
     @handlers = []
     @action_descriptors = []
+    @attributes = []
+  end
+
+  def <<(attribute)
+    case attribute
+    when StimulusBuilder::ControllerAttribute
+      connect_controller(attribute)
+    end
+  end
+
+  def attributes
+    @attributes.inject({}) do |memo, attribute|
+      memo.merge(attribute)
+    end
+  end
+
+  def connect(controller_name)
+    self << StimulusBuilder::ControllerAttribute.new([controller_name])
   end
 
   def fire(handler, **options)
@@ -15,5 +34,19 @@ class StimulusBuilder::Element
 
   def on(event, handler, attach_to: nil, **options)
     @action_descriptors << StimulusBuilder::ActionDescriptor.new(event, handler, attach_to, **options)
+  end
+
+  private
+
+  def connect_controller(controller_attribute)
+    index = @attributes.index do |attribute|
+      StimulusBuilder::ControllerAttribute === attribute
+    end
+
+    if index.present?
+      @attributes[index] += controller_attribute
+    else
+      @attributes << controller_attribute
+    end
   end
 end
