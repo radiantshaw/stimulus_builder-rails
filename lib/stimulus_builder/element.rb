@@ -26,6 +26,8 @@ class StimulusBuilder::Element
 
   def connect(controller_name)
     self << StimulusBuilder::ControllerAttribute.new([controller_name])
+
+    StimulusBuilder::Controller.new(controller_name)
   end
 
   def fire(handler, **options)
@@ -34,6 +36,15 @@ class StimulusBuilder::Element
 
   def on(event, handler, attach_to: nil, **options)
     @action_descriptors << StimulusBuilder::ActionDescriptor.new(event, handler, attach_to, **options)
+  end
+
+  def target_attributes
+    @target_attributes ||= []
+  end
+
+  # FIXME: This is needed to not render this element in tests.
+  def to_s
+    ''.freeze
   end
 
   private

@@ -30,8 +30,19 @@ class StimulusBuilder::Tag
 
   def div2(&block)
     element = StimulusBuilder::Element.new
-    yield(element)
 
-    @builder_context.div(data: element.attributes)
+    captured_html = block.call(element)
+
+    target_attributes =
+      element.target_attributes.inject({}) do |memo, target_attribute|
+        memo.merge(target_attribute)
+      end
+
+    attributes = {
+      **element.attributes,
+      **target_attributes,
+    }
+
+    @builder_context.div(captured_html, data: attributes)
   end
 end

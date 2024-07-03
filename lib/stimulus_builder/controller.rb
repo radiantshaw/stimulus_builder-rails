@@ -1,4 +1,5 @@
 require "stimulus_builder/handler"
+require "stimulus_builder/target_attribute"
 
 class StimulusBuilder::Controller
   MODULE_SEPARATOR = "/".freeze
@@ -11,7 +12,12 @@ class StimulusBuilder::Controller
   end
 
   def method_missing(action_method, *args)
-    StimulusBuilder::Handler.new(self, action_method)
+    if action_method.ends_with?("=".freeze)
+      target_element = args[0]
+      target_element.target_attributes << StimulusBuilder::TargetAttribute.new(action_method[..-2], self)
+    else
+      StimulusBuilder::Handler.new(self, action_method)
+    end
   end
 
   def to_s
