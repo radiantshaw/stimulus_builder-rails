@@ -54,6 +54,10 @@ class StimulusBuilder::Element
     @value_attributes ||= []
   end
 
+  def class_attributes
+    @class_attributes ||= []
+  end
+
   # FIXME: This is needed to not render this element in tests.
   def to_s
     ''.freeze

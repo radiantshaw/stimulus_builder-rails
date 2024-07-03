@@ -48,11 +48,17 @@ class StimulusBuilder::Tag
         memo.merge(value_attribute)
       end
 
+    class_attributes =
+      element.class_attributes.inject({}) do |memo, class_attribute|
+        memo.merge(class_attribute)
+      end
+
     attributes = {
       **element.attributes,
       **target_attributes,
       **outlet_attributes,
       **value_attributes,
+      **class_attributes,
     }
 
     @builder_context.div(captured_html, data: attributes)

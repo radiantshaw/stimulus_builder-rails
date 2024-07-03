@@ -2,6 +2,7 @@ require "stimulus_builder/handler"
 require "stimulus_builder/target_attribute"
 require "stimulus_builder/outlet_attribute"
 require "stimulus_builder/value_attribute"
+require "stimulus_builder/class_attribute"
 
 class StimulusBuilder::Controller
   MODULE_SEPARATOR = "/".freeze
@@ -30,6 +31,16 @@ class StimulusBuilder::Controller
 
     # FIXME: This is required so that when this method is called from Ruby files,
     # it doesn't output the values hash that gets returned by the each method above.
+    ''
+  end
+
+  def classes!(**map)
+    map.each do |logical_name, klass|
+      @element.class_attributes << StimulusBuilder::ClassAttribute.new(self, logical_name, klass)
+    end
+
+    # FIXME: This is required so that when this method is called from Ruby files,
+    # it doesn't output the map hash that gets returned by the each method above.
     ''
   end
 
