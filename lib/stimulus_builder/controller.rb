@@ -1,5 +1,6 @@
 require "stimulus_builder/handler"
 require "stimulus_builder/target_attribute"
+require "stimulus_builder/outlet_attribute"
 
 class StimulusBuilder::Controller
   MODULE_SEPARATOR = "/".freeze
@@ -7,8 +8,9 @@ class StimulusBuilder::Controller
 
   private_constant :MODULE_SEPARATOR, :IDENTIFIER_SEPARATOR
 
-  def initialize(controller_name)
+  def initialize(controller_name, element = nil)
     @controller_name = controller_name.to_s
+    @element = element
   end
 
   def method_missing(action_method, *args)
@@ -18,6 +20,10 @@ class StimulusBuilder::Controller
     else
       StimulusBuilder::Handler.new(self, action_method)
     end
+  end
+
+  def []=(selector, outlet)
+    @element.outlet_attributes << StimulusBuilder::OutletAttribute.new(selector, self, outlet)
   end
 
   def to_s

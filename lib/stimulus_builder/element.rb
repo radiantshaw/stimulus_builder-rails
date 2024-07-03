@@ -24,10 +24,14 @@ class StimulusBuilder::Element
     end
   end
 
+  def use(controller_name)
+    StimulusBuilder::Controller.new(controller_name)
+  end
+
   def connect(controller_name)
     self << StimulusBuilder::ControllerAttribute.new([controller_name])
 
-    StimulusBuilder::Controller.new(controller_name)
+    StimulusBuilder::Controller.new(controller_name, self)
   end
 
   def fire(handler, **options)
@@ -40,6 +44,10 @@ class StimulusBuilder::Element
 
   def target_attributes
     @target_attributes ||= []
+  end
+
+  def outlet_attributes
+    @outlet_attributes ||= []
   end
 
   # FIXME: This is needed to not render this element in tests.
