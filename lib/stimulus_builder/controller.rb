@@ -1,6 +1,7 @@
 require "stimulus_builder/handler"
 require "stimulus_builder/target_attribute"
 require "stimulus_builder/outlet_attribute"
+require "stimulus_builder/value_attribute"
 
 class StimulusBuilder::Controller
   MODULE_SEPARATOR = "/".freeze
@@ -20,6 +21,16 @@ class StimulusBuilder::Controller
     else
       StimulusBuilder::Handler.new(self, action_method)
     end
+  end
+
+  def values!(**values)
+    values.each do |key, value|
+      @element.value_attributes << StimulusBuilder::ValueAttribute.new(self, key, value)
+    end
+
+    # FIXME: This is required so that when this method is called from Ruby files,
+    # it doesn't output the values hash that gets returned by the each method above.
+    ''
   end
 
   def []=(selector, outlet)
