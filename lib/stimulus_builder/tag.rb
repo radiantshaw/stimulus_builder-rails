@@ -33,6 +33,11 @@ class StimulusBuilder::Tag
 
     captured_html = block.call(element)
 
+    param_attributes =
+      element.param_attributes.inject({}) do |memo, param_attribute|
+        memo.merge(param_attribute)
+      end
+
     target_attributes =
       element.target_attributes.inject({}) do |memo, target_attribute|
         memo.merge(target_attribute)
@@ -55,6 +60,8 @@ class StimulusBuilder::Tag
 
     attributes = {
       **element.attributes,
+      **element.action_attribute,
+      **param_attributes,
       **target_attributes,
       **outlet_attributes,
       **value_attributes,

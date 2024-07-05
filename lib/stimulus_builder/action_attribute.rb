@@ -10,4 +10,8 @@ class StimulusBuilder::ActionAttribute
   def value
     @action_descriptors.join(" ").html_safe
   end
+
+  def to_hash
+    { name => value }
+  end
 end

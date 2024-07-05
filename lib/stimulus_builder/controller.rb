@@ -1,3 +1,4 @@
+require "debug"
 require "stimulus_builder/handler"
 require "stimulus_builder/target_attribute"
 require "stimulus_builder/outlet_attribute"
@@ -20,7 +21,8 @@ class StimulusBuilder::Controller
       target_element = args[0]
       target_element.target_attributes << StimulusBuilder::TargetAttribute.new(action_method[..-2], self)
     else
-      StimulusBuilder::Handler.new(self, action_method)
+      params = args[0] || {}
+      StimulusBuilder::Handler.new(self, action_method, params)
     end
   end
 

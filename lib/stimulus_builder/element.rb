@@ -39,7 +39,12 @@ class StimulusBuilder::Element
   end
 
   def on(event, handler, attach_to: nil, **options)
+    @handlers << handler
     @action_descriptors << StimulusBuilder::ActionDescriptor.new(event, handler, attach_to, **options)
+
+    # FIXME: This is required so that when this method is called from Ruby files,
+    # it doesn't output the value that gets returned by the above line.
+    ''
   end
 
   def target_attributes
@@ -56,6 +61,16 @@ class StimulusBuilder::Element
 
   def class_attributes
     @class_attributes ||= []
+  end
+
+  def action_attribute
+    StimulusBuilder::ActionAttribute.new(@action_descriptors)
+  end
+
+  def param_attributes
+    @handlers.inject([]) do |memo, handler|
+      memo + handler.param_attributes
+    end
   end
 
   # FIXME: This is needed to not render this element in tests.
