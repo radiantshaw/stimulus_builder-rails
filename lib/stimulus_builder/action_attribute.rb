@@ -1,17 +1,21 @@
-class StimulusBuilder::ActionAttribute
-  def initialize(action_descriptors)
-    @action_descriptors = action_descriptors
-  end
+require "stimulus_builder/attribute"
 
-  def name
-    :action
-  end
+module StimulusBuilder
+  class ActionAttribute < Attribute
+    def initialize(action_descriptor)
+      @action_descriptors = [action_descriptor]
+    end
 
-  def value
-    @action_descriptors.join(" ").html_safe
-  end
+    def name
+      "data-action"
+    end
 
-  def to_hash
-    { name => value }
+    def value
+      @action_descriptors.join(" ").html_safe
+    end
+
+    def <<(action_descriptor)
+      @action_descriptors << action_descriptor
+    end
   end
 end

@@ -1,21 +1,19 @@
-require "stimulus_builder/identifier"
+require "stimulus_builder/attribute"
 
-class StimulusBuilder::OutletAttribute
-  def initialize(selector, identifier, outlet)
-    @selector = selector
-    @identifier = identifier
-    @outlet = outlet
-  end
+module StimulusBuilder
+  class OutletAttribute < Attribute
+    def initialize(identifier, outlet, selector)
+      @identifier = identifier
+      @outlet = outlet
+      @selector = selector
+    end
 
-  def name
-    "#{@identifier}-#{@outlet}-outlet"
-  end
+    def name
+      "data-#{@identifier}-#{@outlet}-outlet"
+    end
 
-  def value
-    @selector
-  end
-
-  def to_hash
-    { name => value }
+    def value
+      @selector
+    end
   end
 end

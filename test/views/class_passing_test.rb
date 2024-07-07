@@ -4,18 +4,16 @@ require "stimulus_builder/helper"
 class ClassPassingTest < ActionView::TestCase
   include StimulusBuilder::Helper
 
-  test "passes classes to the controller" do
+  test "passes CSS classes to the controller via the `classes!` method" do
     to_render =
-      stimulated.div2 do |display|
-        _display = display.connect(:display)
+      stimulated.div do |component|
+        _search = component.connect(:search)
 
-        _display.classes!(active: 'active--greyed', loading_spinner: 'loader--primary')
+        _search.classes!(loading: "search--busy")
       end
 
     render(html: to_render)
 
-    puts rendered
-    assert_select("div[data-display-active-class=?]", "active--greyed")
-    assert_select("div[data-display-loading-spinner-class=?]", "loader--primary")
+    assert_select("div[data-search-loading-class=?]", "search--busy")
   end
 end

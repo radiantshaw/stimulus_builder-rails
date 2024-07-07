@@ -9,23 +9,10 @@ class StimulusBuilder::Tag
     @builder_context = builder_context
   end
 
-  def div(controlled_by:, &block)
-    controllers =
-      Array.wrap(controlled_by).map do |controller_identifier|
-        StimulusBuilder::Controller.new(controller_identifier)
-      end
-
+  def div(&block)
     element = StimulusBuilder::Element.new
-
-    yield(*controllers, element) if block_given?
-
-    stimulus_attributes =
-      StimulusBuilder::StimulusAttributes.new([
-        StimulusBuilder::ControllerAttribute.new(controllers),
-        StimulusBuilder::ActionAttribute.new(element.action_descriptors)
-      ])
-
-    @builder_context.div(data: stimulus_attributes.to_h)
+    inner_html = yield(element)
+    @builder_context.div(inner_html, **element.attributes)
   end
 
   def div2(&block)

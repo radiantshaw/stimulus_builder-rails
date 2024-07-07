@@ -1,11 +1,10 @@
-require "debug"
+require "stimulus_builder/element_representation"
 require "stimulus_builder/handler"
-require "stimulus_builder/target_attribute"
-require "stimulus_builder/outlet_attribute"
 require "stimulus_builder/value_attribute"
-require "stimulus_builder/class_attribute"
 
 class StimulusBuilder::Controller
+  include StimulusBuilder::ElementRepresentation
+
   MODULE_SEPARATOR = "/".freeze
   IDENTIFIER_SEPARATOR = "--".freeze
 
@@ -19,7 +18,7 @@ class StimulusBuilder::Controller
   def method_missing(action_method, *args)
     if action_method.ends_with?("=".freeze)
       target_element = args[0]
-      target_element.target_attributes << StimulusBuilder::TargetAttribute.new(action_method[..-2], self)
+      target_element.mark_as_target!(self, action_method[..-2])
     else
       params = args[0] || {}
       StimulusBuilder::Handler.new(self, action_method, params)
@@ -27,8 +26,8 @@ class StimulusBuilder::Controller
   end
 
   def values!(**values)
-    values.each do |key, value|
-      @element.value_attributes << StimulusBuilder::ValueAttribute.new(self, key, value)
+    values.each do |name, value|
+      @element.pass_values!(self, name, value)
     end
 
     # FIXME: This is required so that when this method is called from Ruby files,
@@ -38,7 +37,7 @@ class StimulusBuilder::Controller
 
   def classes!(**map)
     map.each do |logical_name, klass|
-      @element.class_attributes << StimulusBuilder::ClassAttribute.new(self, logical_name, klass)
+      @element.pass_classes!(self, logical_name, klass)
     end
 
     # FIXME: This is required so that when this method is called from Ruby files,
@@ -47,7 +46,7 @@ class StimulusBuilder::Controller
   end
 
   def []=(selector, outlet)
-    @element.outlet_attributes << StimulusBuilder::OutletAttribute.new(selector, self, outlet)
+    @element.open_outlet!(self, outlet, selector)
   end
 
   def to_s

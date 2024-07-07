@@ -1,20 +1,18 @@
-require "stimulus_builder/identifier"
+require "stimulus_builder/attribute"
 
-class StimulusBuilder::ValueAttribute
-  def initialize(identifier, key, value)
-    @identifier = identifier
-    @key, @value = key.to_s, value
-  end
+module StimulusBuilder
+  class ValueAttribute < Attribute
+    def initialize(identifier, key, value)
+      @identifier = identifier
+      @key, @value = key.to_s, value
+    end
 
-  def name
-    "#{@identifier}-#{@key.dasherize}-value"
-  end
+    def name
+      "data-#{@identifier}-#{@key.dasherize}-value"
+    end
 
-  def value
-    @value
-  end
-
-  def to_hash
-    { name => value }
+    def value
+      @value
+    end
   end
 end

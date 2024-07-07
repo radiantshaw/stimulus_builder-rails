@@ -1,20 +1,30 @@
-require "stimulus_builder/identifier"
+require "stimulus_builder/attribute"
 
-class StimulusBuilder::TargetAttribute
-  def initialize(property_name, controller)
-    @property_name = property_name
-    @controller = controller
-  end
+module StimulusBuilder
+  class TargetAttribute < Attribute
+    def initialize(identifier, name)
+      @identifier = identifier
+      @names = [name]
+    end
 
-  def name
-    "#{@controller}-target"
-  end
+    def name
+      "data-#{@identifier}-target"
+    end
 
-  def value
-    @property_name.camelize(:lower)
-  end
+    def value
+      properties.join(" ")
+    end
 
-  def to_hash
-    { name => value }
+    def <<(name)
+      @names << name
+    end
+
+    private
+
+    def properties
+      @names.map do |name|
+        name.camelize(:lower)
+      end
+    end
   end
 end
