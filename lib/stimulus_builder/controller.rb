@@ -10,7 +10,7 @@ class StimulusBuilder::Controller
 
   private_constant :MODULE_SEPARATOR, :IDENTIFIER_SEPARATOR
 
-  def initialize(controller_name, element = nil)
+  def initialize(controller_name, element)
     @controller_name = controller_name.to_s
     @element = element
   end

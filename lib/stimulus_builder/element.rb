@@ -3,35 +3,18 @@ require "stimulus_builder/action_attribute"
 require "stimulus_builder/controller_attribute"
 require "stimulus_builder/element_representation"
 require "stimulus_builder/outlet"
+require "stimulus_builder/element_representable"
 
 module StimulusBuilder
   class Element
     include ElementRepresentation
+    include ElementRepresentable
 
     def initialize
       @attributes = []
       @controller_index = nil
       @action_index = nil
       @target_indexes = {}
-    end
-
-    def attributes
-      @attributes.inject({}) do |memo, attribute|
-        memo.merge(attribute)
-      end
-    end
-
-    def connect(controller_name)
-      controller = StimulusBuilder::Controller.new(controller_name, self)
-
-      if @controller_index.nil?
-        @attributes << StimulusBuilder::ControllerAttribute.new(controller)
-        @controller_index = @attributes.length - 1
-      else
-        @attributes[@controller_index] << controller
-      end
-
-      controller
     end
 
     def use(controller_name)
