@@ -21,10 +21,6 @@ module StimulusBuilder
       end
     end
 
-    def use(controller_name)
-      StimulusBuilder::Outlet.new(controller_name)
-    end
-
     def connect(controller_name)
       controller = StimulusBuilder::Controller.new(controller_name, self)
 
@@ -36,6 +32,10 @@ module StimulusBuilder
       end
 
       controller
+    end
+
+    def use(controller_name)
+      StimulusBuilder::Outlet.new(controller_name)
     end
 
     def fire(handler, **options)

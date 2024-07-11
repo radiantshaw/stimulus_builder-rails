@@ -1,9 +1,7 @@
 require "test_helper"
-require "stimulus_builder/helper"
+require "stimulus_builder/helper_delegate"
 
 class ActionSpecificationTest < ActionView::TestCase
-  include StimulusBuilder::Helper
-
   test "specifies an action with `on` via a method call on the controller" do
     to_render =
       stimulated.div do |component|
@@ -82,5 +80,11 @@ class ActionSpecificationTest < ActionView::TestCase
     render(html: to_render)
 
     assert_select("div > div[data-action=?]", "focus->field#highlight search#update")
+  end
+
+  private
+
+  def stimulated
+    StimulusBuilder::HelperDelegate.new(view)
   end
 end

@@ -1,9 +1,7 @@
 require "test_helper"
-require "stimulus_builder/helper"
+require "stimulus_builder/helper_delegate"
 
 class ControllerConnectionTest < ActionView::TestCase
-  include StimulusBuilder::Helper
-
   test "doesn't add `data-controller` if `#connect` isn't called at all" do
     to_render =
       stimulated.div do |element|
@@ -102,5 +100,11 @@ class ControllerConnectionTest < ActionView::TestCase
     render(html: to_render)
 
     assert_select("div[data-controller=?]", "clipboard user-auth--password-visibility")
+  end
+
+  private
+
+  def stimulated
+    StimulusBuilder::HelperDelegate.new(view)
   end
 end

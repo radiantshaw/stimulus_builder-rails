@@ -1,7 +1,7 @@
-require "stimulus_builder/tag"
+require "stimulus_builder/helper_delegate"
 
 module StimulusBuilder::Helper
   def stimulated
-    StimulusBuilder::Tag.new(tag)
+    StimulusBuilder::HelperDelegate.new(view_context)
   end
 end

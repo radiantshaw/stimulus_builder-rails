@@ -1,9 +1,7 @@
 require "test_helper"
-require "stimulus_builder/helper"
+require "stimulus_builder/helper_delegate"
 
 class ValuePassingTest < ActionView::TestCase
-  include StimulusBuilder::Helper
-
   test "passes values to the controller" do
     to_render =
       stimulated.div do |element|
@@ -17,5 +15,11 @@ class ValuePassingTest < ActionView::TestCase
     assert_select("div[data-animated-number-start-point-value=?]", "42")
     assert_select("div[data-animated-number-end-point-value=?]", "50")
     assert_select("div[data-animated-number-increment-value=?]", "2")
+  end
+
+  private
+
+  def stimulated
+    StimulusBuilder::HelperDelegate.new(view)
   end
 end

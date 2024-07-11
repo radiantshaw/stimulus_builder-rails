@@ -17,5 +17,19 @@ module StimulusBuilder
     def <<(controller)
       @controllers << controller
     end
+
+    def +(controller_attribute)
+      @controllers += controller_attribute.controllers
+
+      self
+    end
+
+    def multi?
+      true
+    end
+
+    protected
+
+    attr_reader :controllers
   end
 end

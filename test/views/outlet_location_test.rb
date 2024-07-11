@@ -1,9 +1,7 @@
 require "test_helper"
-require "stimulus_builder/helper"
+require "stimulus_builder/helper_delegate"
 
 class OutletLocationTest < ActionView::TestCase
-  include StimulusBuilder::Helper
-
   test "locates another controller as an outlet" do
     to_render =
       stimulated.div do |element|
@@ -15,5 +13,11 @@ class OutletLocationTest < ActionView::TestCase
     render(html: to_render)
 
     assert_select("div[data-color-picker-dirty-outlet=?]", "#dirty")
+  end
+
+  private
+
+  def stimulated
+    StimulusBuilder::HelperDelegate.new(view)
   end
 end
