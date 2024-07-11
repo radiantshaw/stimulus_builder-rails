@@ -1,13 +1,21 @@
-class StimulusBuilder::ControllerAttribute
-  def initialize(controllers)
-    @controllers = controllers
-  end
+require "stimulus_builder/attribute"
 
-  def name
-    :controller
-  end
+module StimulusBuilder
+  class ControllerAttribute < Attribute
+    def initialize(controller)
+      @controllers = [controller]
+    end
 
-  def value
-    @controllers.join(" ")
+    def name
+      "data-controller"
+    end
+
+    def value
+      @controllers.join(" ")
+    end
+
+    def <<(controller)
+      @controllers << controller
+    end
   end
 end
