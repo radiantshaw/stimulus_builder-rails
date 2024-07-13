@@ -2,8 +2,8 @@ require "stimulus_builder/attribute"
 
 module StimulusBuilder
   class ControllerAttribute < Attribute
-    def initialize(controller)
-      @controllers = [controller]
+    def initialize(*controllers)
+      @controllers = controllers
     end
 
     def name
@@ -19,9 +19,7 @@ module StimulusBuilder
     end
 
     def +(controller_attribute)
-      @controllers += controller_attribute.controllers
-
-      self
+      self.class.new(*(@controllers + controller_attribute.controllers))
     end
 
     def multi?

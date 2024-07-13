@@ -45,6 +45,10 @@ class StimulusBuilder::Controller
     ''
   end
 
+  def [](event_name)
+    "#{self}:#{event_name.to_s.dasherize}"
+  end
+
   def []=(selector, outlet)
     @element.open_outlet!(self, outlet, selector)
   end

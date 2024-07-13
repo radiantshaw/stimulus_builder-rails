@@ -3,6 +3,12 @@ require "stimulus_builder/element"
 
 module StimulusBuilder
   class HelperDelegate
+    ELEMENT_NAMES = [
+      :div, :span, :input, :button
+    ].freeze
+
+    private_constant :ELEMENT_NAMES
+
     def initialize(view_context)
       @view_context = view_context
     end
@@ -13,7 +19,7 @@ module StimulusBuilder
       @view_context.form_for(record, options, &block)
     end
 
-    [:div, :span, :input].each do |element_name|
+    ELEMENT_NAMES.each do |element_name|
       define_method(element_name) do |content = nil, **options, &block|
         Element.new.then do |element|
           @view_context.capture do
@@ -24,7 +30,7 @@ module StimulusBuilder
               .public_send(
                 element_name,
                 inner_html,
-                **element.attributes
+                **options.merge(element.attributes)
               )
           end
         end

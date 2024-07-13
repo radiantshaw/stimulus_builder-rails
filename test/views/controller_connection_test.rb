@@ -2,109 +2,32 @@ require "test_helper"
 require "stimulus_builder/helper_delegate"
 
 class ControllerConnectionTest < ActionView::TestCase
-  test "doesn't add `data-controller` if `#connect` isn't called at all" do
-    to_render =
-      stimulated.div do |element|
-        # ...
-      end
+  test "identifiers" do
+    render(partial: "controllers/identifiers")
 
-    render(html: to_render)
-
-    assert_select("div[data-controller]", count: 0)
+    assert_dom("div[data-controller=?]", "reference")
   end
 
-  test "adds `data-controller` when `#connect` is called at least once" do
-    to_render =
-      stimulated.div do |element|
-        element.connect(:carousel)
-      end
+  test "nested controllers" do
+    render(partial: "controllers/nested_controllers")
 
-    render(html: to_render)
-
-    assert_select("div[data-controller]", count: 1)
+    assert_select("div[data-controller=?]", "users--list-item")
   end
 
-  test "understands symbols as controller names" do
-    to_render =
-      stimulated.div do |element|
-        element.connect(:clipboard)
-      end
+  test "multiple controllers" do
+    render(partial: "controllers/multiple_controllers")
 
-    render(html: to_render)
-
-    assert_select("div[data-controller=?]", "clipboard")
+    assert_dom("div[data-controller=?]", "clipboard list-item")
   end
 
-  test "converts multi-word symbols into appropriate controller names" do
-    to_render =
-      stimulated.div do |element|
-        element.connect(:auto_submit)
-      end
+  test "cross-controller coordination" do
+    render(partial: "controllers/cross_controller_coordination")
 
-    render(html: to_render)
-
-    assert_select("div[data-controller=?]", "auto-submit")
-  end
-
-  test "understands strings as controller names" do
-    to_render =
-      stimulated.div do |element|
-        element.connect("dialog")
-      end
-
-    render(html: to_render)
-
-    assert_select("div[data-controller=?]", "dialog")
-  end
-
-  test "converts multi-word strings into appropriate controller names" do
-    to_render =
-      stimulated.div do |element|
-        element.connect("content_loader")
-      end
-
-    render(html: to_render)
-
-    assert_select("div[data-controller=?]", "content-loader")
-  end
-
-  test "understands nested controller names" do
-    to_render =
-      stimulated.div do |element|
-        element.connect("ordering/sortable")
-      end
-
-    render(html: to_render)
-
-    assert_select("div[data-controller=?]", "ordering--sortable")
-  end
-
-  test "understands multi-word controller names within nesting" do
-    to_render =
-      stimulated.div do |element|
-        element.connect("user_auth/password_visibility")
-      end
-
-    render(html: to_render)
-
-    assert_select("div[data-controller=?]", "user-auth--password-visibility")
-  end
-
-  test "appends multiple controllers when called more than once" do
-    to_render =
-      stimulated.div do |element|
-        element.connect(:clipboard)
-        element.connect("user_auth/password_visibility")
-      end
-
-    render(html: to_render)
-
-    assert_select("div[data-controller=?]", "clipboard user-auth--password-visibility")
-  end
-
-  private
-
-  def stimulated
-    StimulusBuilder::HelperDelegate.new(view)
+    assert_dom_equal(<<~HTML, rendered)
+      <div data-controller="clipboard effects" data-action="clipboard:copy->effects#flash">
+        PIN: <input type="text" value="1234" readonly="readonly" data-clipboard-target="source">
+        <button data-action="clipboard#copy">Copy to Clipboard</button>
+      </div>
+    HTML
   end
 end
