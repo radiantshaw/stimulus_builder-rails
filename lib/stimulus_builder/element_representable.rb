@@ -32,7 +32,7 @@ module StimulusBuilder
 
     def attribute_index(attribute)
       @attributes.index do |iterable_attribute|
-        attribute.class === iterable_attribute
+        attribute.name == iterable_attribute.name
       end
     end
   end

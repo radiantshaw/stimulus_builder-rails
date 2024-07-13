@@ -18,5 +18,13 @@ module StimulusBuilder
       options[:html] ||= {}
       options[:html].merge!(attributes)
     end
+
+    def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
+      Element.new.then do |element|
+        yield(element)
+
+        super(method, options.merge(element.attributes), checked_value, unchecked_value)
+      end
+    end
   end
 end

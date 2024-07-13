@@ -6,15 +6,6 @@ require "stimulus_builder/class_attribute"
 module StimulusBuilder::ElementRepresentation
   protected
 
-  def mark_as_target!(identifier, name)
-    if @target_indexes[identifier].nil?
-      @attributes << StimulusBuilder::TargetAttribute.new(identifier, name)
-      @target_indexes[identifier] = @attributes.length - 1
-    else
-      @attributes[@target_indexes[identifier]] << name
-    end
-  end
-
   def open_outlet!(identifier, outlet, selector)
     @attributes << StimulusBuilder::OutletAttribute.new(identifier, outlet, selector)
   end

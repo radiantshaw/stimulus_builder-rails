@@ -1,6 +1,7 @@
 require "stimulus_builder/element_representation"
 require "stimulus_builder/handler"
 require "stimulus_builder/value_attribute"
+require "stimulus_builder/target_attribute"
 
 class StimulusBuilder::Controller
   include StimulusBuilder::ElementRepresentation
@@ -17,8 +18,7 @@ class StimulusBuilder::Controller
 
   def method_missing(action_method, *args)
     if action_method.ends_with?("=".freeze)
-      target_element = args[0]
-      target_element.mark_as_target!(self, action_method[..-2])
+      args[0] << StimulusBuilder::TargetAttribute.new(self, action_method[..-2])
     else
       params = args[0] || {}
       StimulusBuilder::Handler.new(self, action_method, params)

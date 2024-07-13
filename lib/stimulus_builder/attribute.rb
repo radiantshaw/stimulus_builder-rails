@@ -3,5 +3,9 @@ module StimulusBuilder
     def to_hash
       { name => value }
     end
+
+    def multi?
+      false
+    end
   end
 end

@@ -13,10 +13,22 @@ module StimulusBuilder
       @view_context.form_for(record, options, &block)
     end
 
-    def div(&block)
-      element = Element.new
-      inner_html = yield(element)
-      @view_context.tag.div(inner_html, **element.attributes)
+    [:div, :span, :input].each do |element_name|
+      define_method(element_name) do |content = nil, **options, &block|
+        Element.new.then do |element|
+          @view_context.capture do
+            block.call(element)
+          end.then do |inner_html|
+            @view_context
+              .tag
+              .public_send(
+                element_name,
+                inner_html,
+                **element.attributes
+              )
+          end
+        end
+      end
     end
   end
 end
