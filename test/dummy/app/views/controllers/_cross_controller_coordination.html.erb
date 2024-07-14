@@ -2,7 +2,7 @@
   <% clipboard = component.connect("clipboard") %>
   <% effects = component.connect("effects") %>
 
-  <% component.on(clipboard[:copy], effects.flash) %>
+  <% component.on(clipboard[:copy]) { effects.flash } %>
 
   PIN:
   <%= stimulated.input(type: "text", value: "1234", readonly: true) do |input| %>
@@ -10,7 +10,7 @@
   <% end %>
 
   <%= stimulated.button do |input| %>
-    <% input.fire(clipboard.copy) %>
+    <% input.fire { clipboard.copy } %>
 
     Copy to Clipboard
   <% end %>

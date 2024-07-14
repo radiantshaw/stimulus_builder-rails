@@ -21,25 +21,6 @@ module StimulusBuilder
       StimulusBuilder::Outlet.new(controller_name)
     end
 
-    def fire(handler, **options)
-      on(nil, handler, **options)
-    end
-
-    def on(event, handler, at: nil, **options)
-      action_descriptor = StimulusBuilder::ActionDescriptor.new(event, handler, at, **options)
-
-      if @action_index.nil?
-        @attributes << StimulusBuilder::ActionAttribute.new(action_descriptor)
-        @action_index = @attributes.length - 1
-      else
-        @attributes[@action_index] << action_descriptor
-      end
-
-      # FIXME: This is required so that when this method is called from Ruby files,
-      # it doesn't output the value that gets returned by the above line.
-      ''
-    end
-
     # FIXME: This is needed to not render this element in tests.
     def to_s
       ''.freeze

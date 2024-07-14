@@ -4,7 +4,7 @@ require "stimulus_builder/element"
 module StimulusBuilder
   class HelperDelegate
     ELEMENT_NAMES = [
-      :div, :span, :input, :button
+      :div, :span, :input, :button, :img
     ].freeze
 
     private_constant :ELEMENT_NAMES

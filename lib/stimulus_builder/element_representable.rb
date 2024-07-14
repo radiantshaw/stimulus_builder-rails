@@ -16,6 +16,18 @@ module StimulusBuilder
       end
     end
 
+    def fire(**options, &block)
+      on(nil, **options, &block)
+    end
+
+    def on(event, at = nil, **options, &block)
+      self << ActionAttribute.new(ActionDescriptor.new(event, block.call, at, **options))
+
+      # FIXME: This is required so that when this method is called from Ruby files,
+      # it doesn't output the value that gets returned by the above line.
+      ''
+    end
+
     private
 
     def update_attributes!(attribute)

@@ -26,5 +26,15 @@ module StimulusBuilder
         super(method, options.merge(element.attributes), checked_value, unchecked_value)
       end
     end
+
+    def button(value = nil, options = {})
+      Element.new.then do |element|
+        @template.capture do
+          yield(element, value)
+        end.then do |inner_html|
+          super(value, options.merge(element.attributes)) { inner_html }
+        end
+      end
+    end
   end
 end
