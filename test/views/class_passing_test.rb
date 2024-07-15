@@ -1,23 +1,20 @@
 require "test_helper"
-require "stimulus_builder/helper_delegate"
 
 class ClassPassingTest < ActionView::TestCase
-  test "passes CSS classes to the controller via the `classes!` method" do
-    to_render =
-      stimulated.div do |component|
-        _search = component.connect(:search)
+  test "pass classes" do
+    render(partial: "classes/pass_classes")
 
-        _search.classes!(loading: "search--busy")
-      end
-
-    render(html: to_render)
-
-    assert_select("div[data-search-loading-class=?]", "search--busy")
+    assert_dom("form[data-controller=\"search\"]") do
+      assert_dom("[data-search-loading-class=?]", "search--busy")
+    end
   end
 
-  private
+  test "naming conventions" do
+    render(partial: "classes/naming_conventions")
 
-  def stimulated
-    StimulusBuilder::HelperDelegate.new(view)
+    assert_dom("form[data-controller=\"search\"]") do
+      assert_dom("[data-search-loading-class=?]", "search--busy")
+      assert_dom("[data-search-no-results-class=?]", "search--empty")
+    end
   end
 end

@@ -1,0 +1,7 @@
+<%= stimulated.div do |component| %>
+  <%
+    component.connect(:loader, {
+      values: { url: "/messages" }
+    })
+  %>
+<% end %>

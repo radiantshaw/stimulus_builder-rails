@@ -10,9 +10,14 @@ module StimulusBuilder
       update_attributes!(attribute)
     end
 
-    def connect(identifier_name)
+    def connect(identifier_name, props = nil)
       Controller.new(identifier_name, self).tap do |controller|
         self << ControllerAttribute.new(controller)
+
+        unless props.nil?
+          create_value_attributes!(controller, props[:values]) if props[:values].present?
+          create_class_attributes!(controller, props[:classes]) if props[:classes].present?
+        end
       end
     end
 
@@ -29,6 +34,18 @@ module StimulusBuilder
     end
 
     private
+
+    def create_value_attributes!(identifier, value_props)
+      value_props.each do |value_name, value_value|
+        self << ValueAttribute.new(identifier, value_name, value_value)
+      end
+    end
+
+    def create_class_attributes!(identifier, class_props)
+      class_props.each do |class_name, class_value|
+        self << ClassAttribute.new(identifier, class_name, class_value)
+      end
+    end
 
     def update_attributes!(attribute)
       if attribute.multi?
