@@ -1,10 +1,8 @@
-require "stimulus_builder/attribute"
-
 module StimulusBuilder
   class TargetAttribute < Attribute
-    def initialize(identifier, name)
+    def initialize(identifier, *target_names)
       @identifier = identifier
-      @names = [name]
+      @target_names = target_names
     end
 
     def name
@@ -15,15 +13,23 @@ module StimulusBuilder
       properties.join(" ")
     end
 
-    def <<(name)
-      @names << name
+    def multi?
+      true
     end
+
+    def +(target_attribute)
+      self.class.new(@identifier, *(@target_names + target_attribute.target_names))
+    end
+
+    protected
+
+    attr_reader :target_names
 
     private
 
     def properties
-      @names.map do |name|
-        name.camelize(:lower)
+      @target_names.map do |target_name|
+        target_name.camelize(:lower)
       end
     end
   end

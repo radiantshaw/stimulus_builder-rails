@@ -1,5 +1,3 @@
-require "stimulus_builder/attribute"
-
 module StimulusBuilder
   class OutletAttribute < Attribute
     def initialize(identifier, outlet, selector)

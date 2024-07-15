@@ -1,86 +1,52 @@
 require "test_helper"
-require "stimulus_builder/helper"
 
 class ActionSpecificationTest < ActionView::TestCase
-  include StimulusBuilder::Helper
+  test "handling DOM events" do
+    render(partial: "actions/handling_dom_events")
 
-  test "specifies an action with `on` via a method call on the controller" do
-    to_render =
-      stimulated.div do |component|
-        _gallery = component.connect(:gallery)
-
-        stimulated.div do |button|
-          button.on("click", _gallery.next)
-        end
-      end
-
-    render(html: to_render)
-
-    assert_select("div > div[data-action=?]", "click->gallery#next")
+    assert_dom("div[data-controller=\"gallery\"]") do
+      assert_dom("> button[data-action=?]", "click->gallery#next")
+    end
   end
 
-  test "specifies a default event with the `fire` method instead of `on`" do
-    to_render =
-      stimulated.div do |component|
-        _gallery = component.connect(:gallery)
+  test "event shorthand" do
+    render(partial: "actions/event_shorthand")
 
-        stimulated.div do |button|
-          button.fire(_gallery.next)
-        end
-      end
-
-    render(html: to_render)
-
-    assert_select("div > div[data-action=?]", "gallery#next")
+    assert_dom("div[data-controller=\"gallery\"]") do
+      assert_select("> button[data-action=?]", "gallery#next")
+    end
   end
 
-  test "delegates the event when specified with the `on` method" do
-    to_render =
-      stimulated.div do |component|
-        _gallery = component.connect(:gallery)
+  test "global events" do
+    render(partial: "actions/global_events")
 
-        stimulated.div do |button|
-          button.on("resize", _gallery.layout, at: :window)
-        end
-      end
-
-    render(html: to_render)
-
-    assert_select("div > div[data-action=?]", "resize@window->gallery#layout")
+    assert_dom("div[data-controller=\"gallery\"]") do
+      assert_select("> div[data-action=?]", "resize@window->gallery#layout")
+    end
   end
 
-  test "appends one or more action options when specified with either `fire` or `on`" do
-    to_render =
-      stimulated.div do |component|
-        _gallery = component.connect(:gallery)
+  test "options" do
+    render(partial: "actions/options")
 
-        component.on("scroll", _gallery.layout, passive: false)
-
-        stimulated.div do |button|
-          button.fire(_gallery.open, capture: true)
-        end
-      end
-
-    render(html: to_render)
-
-    assert_select("div[data-action=?]", "scroll->gallery#layout:!passive")
-    assert_select("div > div[data-action=?]", "gallery#open:capture")
+    assert_dom("div[data-controller=\"gallery\"]") do
+      assert_select("[data-action=?]", "scroll->gallery#layout:!passive")
+      assert_select("> img[data-action=?]", "gallery#open:capture")
+    end
   end
 
-  test "appends multiple handlers when `fire` or `on` is called more than once" do
-    to_render =
-      stimulated.div do |component|
-        _field = component.connect(:field)
-        _search = component.connect(:search)
+  test "multiple_actions" do
+    render(partial: "actions/multiple_actions")
 
-        stimulated.div do |field|
-          field.on("focus", _field.highlight)
-          field.fire(_search.update)
-        end
-      end
+    assert_dom("div[data-controller=\"field search\"]") do
+      assert_select("> input[data-action=?]", "focus->field#highlight search#update")
+    end
+  end
 
-    render(html: to_render)
+  test "naming conventions" do
+    render(partial: "actions/naming_conventions")
 
-    assert_select("div > div[data-action=?]", "focus->field#highlight search#update")
+    assert_dom("form[data-controller=\"profile\"]") do
+      assert_select("> button[data-action=?]", "profile#showDialog")
+    end
   end
 end

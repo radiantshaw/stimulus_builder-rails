@@ -1,0 +1,14 @@
+<%= stimulated.form_for(:user, url: "/users") do |form| %>
+  <% _search = form.connect(:search) %>
+  <% _checkbox = form.connect(:checkbox) %>
+
+  <%= form.check_box(:projects) do |input| %>
+    <% _search.projects = input %>
+    <% _checkbox.input = input %>
+  <% end %>
+
+  <%= form.check_box(:messages) do |input| %>
+    <% _search.messages = input %>
+    <% _checkbox.input = input %>
+  <% end %>
+<% end %>

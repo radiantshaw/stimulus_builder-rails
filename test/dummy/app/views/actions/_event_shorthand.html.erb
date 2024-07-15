@@ -1,0 +1,7 @@
+<%= stimulated.div do |component| %>
+  <% gallery = component.connect(:gallery) %>
+
+  <%= stimulated.button do |button| %>
+    <% button.fire { gallery.next } %>
+  <% end %>
+<% end %>

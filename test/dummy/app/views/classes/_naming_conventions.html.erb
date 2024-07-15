@@ -1,0 +1,7 @@
+<%= stimulated.form_for(:user, url: "/users") do |form| %>
+  <%
+    form.connect(:search, {
+      classes: { loading: "search--busy", no_results: "search--empty" }
+    })
+  %>
+<% end %>

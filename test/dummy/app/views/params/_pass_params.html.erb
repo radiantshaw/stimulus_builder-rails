@@ -1,0 +1,16 @@
+<%= stimulated.div do |component| %>
+  <% item = component.connect(:item) %>
+
+  <% stimulated.button do |button| %>
+    <% button.fire do %>
+      <%
+        item.upvote(
+          id: "12345",
+          url: "/votes",
+          payload: { value: "1234567" }.to_json,
+          active: true
+        )
+      %>
+    <% end %>
+  <% end %>
+<% end %>

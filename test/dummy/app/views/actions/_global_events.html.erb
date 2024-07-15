@@ -1,0 +1,7 @@
+<%= stimulated.div do |component| %>
+  <% gallery = component.connect(:gallery) %>
+
+  <%= stimulated.div do |button| %>
+    <% button.on("resize", :window) { gallery.layout } %>
+  <% end %>
+<% end %>

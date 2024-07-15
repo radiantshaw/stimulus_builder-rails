@@ -1,0 +1,5 @@
+<%= stimulated.div do |component| %>
+  <% chat = component.connect(:chat) %>
+
+  <% chat[".online-user"] = component.use(:user_status) %>
+<% end %>

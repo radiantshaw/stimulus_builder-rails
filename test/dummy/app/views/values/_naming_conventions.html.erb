@@ -1,0 +1,7 @@
+<%= stimulated.div do |component| %>
+  <%
+    component.connect(:loader, {
+      values: { content_type: "application/json" }
+    })
+  %>
+<% end %>
