@@ -1,24 +1,27 @@
 require "stimulus_builder/identifier"
+require "stimulus_builder/attribute"
 
-class StimulusBuilder::ParamAttribute
-  attr_reader :value
+module StimulusBuilder
+  class ParamAttribute < Attribute
+    attr_reader :value
 
-  def initialize(identifier, name, value)
-    @identifier = identifier
-    @name, @value = name.to_s, value
-  end
+    def initialize(identifier, name, value)
+      @identifier = identifier
+      @name, @value = name.to_s, value
+    end
 
-  def name
-    "#{@identifier}-#{dasherized_name}-param"
-  end
+    def name
+      "data-#{@identifier}-#{dasherized_name}-param"
+    end
 
-  def to_hash
-    { name => value }
-  end
+    def to_hash
+      { name => value }
+    end
 
-  private
+    private
 
-  def dasherized_name
-    @name.dasherize
+    def dasherized_name
+      @name.dasherize
+    end
   end
 end

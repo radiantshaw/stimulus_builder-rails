@@ -30,7 +30,13 @@ module StimulusBuilder
     end
 
     def on(event, at = nil, **options, &block)
-      self << ActionAttribute.new(ActionDescriptor.new(event, block.call, at, **options))
+      block.call.then do |handler|
+        self << ActionAttribute.new(ActionDescriptor.new(event, handler, at, **options))
+
+        handler.param_attributes.each do |param_attribute|
+          self << param_attribute
+        end
+      end
 
       # FIXME: This is required so that when this method is called from Ruby files,
       # it doesn't output the value that gets returned by the above line.
