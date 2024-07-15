@@ -1,6 +1,3 @@
-require "stimulus_builder/identifier"
-require "stimulus_builder/attribute"
-
 module StimulusBuilder
   class ParamAttribute < Attribute
     attr_reader :value

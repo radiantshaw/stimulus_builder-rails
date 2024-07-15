@@ -1,7 +1,3 @@
-require "stimulus_builder/controller"
-require "stimulus_builder/controller_attribute"
-require "stimulus_builder/element_representable"
-
 module StimulusBuilder
   class FormBuilder < ActionView::Helpers::FormBuilder
     include ElementRepresentable

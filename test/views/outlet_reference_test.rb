@@ -1,5 +1,4 @@
 require "test_helper"
-require "stimulus_builder/helper_delegate"
 
 class OutletReferenceTest < ActionView::TestCase
   test "locates another controller as an outlet" do

@@ -1,5 +1,3 @@
-require "stimulus_builder/attribute"
-
 module StimulusBuilder
   class ActionAttribute < Attribute
     def initialize(*action_descriptors)
@@ -12,10 +10,6 @@ module StimulusBuilder
 
     def value
       @action_descriptors.join(" ").html_safe
-    end
-
-    def <<(action_descriptor)
-      @action_descriptors << action_descriptor
     end
 
     def +(action_attribute)

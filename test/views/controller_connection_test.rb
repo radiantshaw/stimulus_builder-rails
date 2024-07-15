@@ -1,5 +1,4 @@
 require "test_helper"
-require "stimulus_builder/helper_delegate"
 
 class ControllerConnectionTest < ActionView::TestCase
   test "identifiers" do

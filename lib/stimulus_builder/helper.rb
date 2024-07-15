@@ -1,7 +1,7 @@
-require "stimulus_builder/helper_delegate"
-
-module StimulusBuilder::Helper
-  def stimulated
-    StimulusBuilder::HelperDelegate.new(self)
+module StimulusBuilder
+  module Helper
+    def stimulated
+      HelperDelegate.new(self)
+    end
   end
 end

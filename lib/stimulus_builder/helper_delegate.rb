@@ -1,6 +1,3 @@
-require "stimulus_builder/form_builder"
-require "stimulus_builder/element"
-
 module StimulusBuilder
   class HelperDelegate
     ELEMENT_NAMES = [

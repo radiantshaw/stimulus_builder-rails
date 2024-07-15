@@ -1,5 +1,3 @@
-require "stimulus_builder/attribute"
-
 module StimulusBuilder
   class ClassAttribute < Attribute
     def initialize(identifier, logical_name, klass)

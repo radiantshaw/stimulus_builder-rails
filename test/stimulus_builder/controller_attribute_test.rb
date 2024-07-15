@@ -12,10 +12,11 @@ class ControllerAttributeTest < ActiveSupport::TestCase
   end
 
   test "accepts more controllers and also preserves the order" do
-    controller = StimulusBuilder::Controller.new(:display, element)
-    controller_attribute = StimulusBuilder::ControllerAttribute.new(controller)
-
-    controller_attribute << StimulusBuilder::Controller.new(:animation, element)
+    controllers = [
+      StimulusBuilder::Controller.new(:display, element),
+      StimulusBuilder::Controller.new(:animation, element)
+    ]
+    controller_attribute = StimulusBuilder::ControllerAttribute.new(*controllers)
 
     assert_equal({ "data-controller" => "display animation" }, controller_attribute.to_hash)
   end

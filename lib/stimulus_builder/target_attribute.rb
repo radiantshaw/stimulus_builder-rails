@@ -1,5 +1,3 @@
-require "stimulus_builder/attribute"
-
 module StimulusBuilder
   class TargetAttribute < Attribute
     def initialize(identifier, *target_names)

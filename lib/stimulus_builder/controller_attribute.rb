@@ -1,5 +1,3 @@
-require "stimulus_builder/attribute"
-
 module StimulusBuilder
   class ControllerAttribute < Attribute
     def initialize(*controllers)
@@ -12,10 +10,6 @@ module StimulusBuilder
 
     def value
       @controllers.join(" ")
-    end
-
-    def <<(controller)
-      @controllers << controller
     end
 
     def +(controller_attribute)
