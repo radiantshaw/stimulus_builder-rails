@@ -50,7 +50,7 @@ class StimulusBuilder::Controller
   end
 
   def []=(selector, outlet)
-    @element.open_outlet!(self, outlet, selector)
+    @element << StimulusBuilder::OutletAttribute.new(self, outlet, selector)
   end
 
   def to_s

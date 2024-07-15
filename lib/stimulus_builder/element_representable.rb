@@ -21,6 +21,10 @@ module StimulusBuilder
       end
     end
 
+    def use(controller_name)
+      Outlet.new(controller_name)
+    end
+
     def fire(**options, &block)
       on(nil, **options, &block)
     end

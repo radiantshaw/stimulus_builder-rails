@@ -17,10 +17,6 @@ module StimulusBuilder
       @target_indexes = {}
     end
 
-    def use(controller_name)
-      StimulusBuilder::Outlet.new(controller_name)
-    end
-
     # FIXME: This is needed to not render this element in tests.
     def to_s
       ''.freeze
