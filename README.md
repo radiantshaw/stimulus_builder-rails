@@ -315,6 +315,35 @@ When target names are more than one word, use `snake_case` for the method names 
 <% end %>
 ```
 
+### Outlets
+
+The `#use` method present on the element returns an object that is a logical representation of an outlet controller. We can then assign this outlet object to the controller where this outlet needs to be accessible by using the controller's `#[]=` method.
+
+```erb
+<div>
+  <%= stimulated.div(class: "online-user") do |component| %>
+    <% component.connect(:user_status)
+  <% end %>
+  <%= stimulated.div(class: "online-user") do |component| %>
+    <% component.connect(:user_status)
+  <% end %>
+  <# ... %>
+</div>
+
+<%# ... %>
+
+<%= stimulated.div(id: "chat") do |component| %>
+  <% chat = component.connect(:chat) %>
+  <% user_status = component.use(:user_status) %>
+
+  <% chat[".online-user"] = user_status %>
+<% end %>
+```
+
+The above will add a `data-chat-user-status-outlet=".online-user"` attribute on the `div#chat` element.
+
+`#use` accepts a name of the controller to be used as an outlet, and it has the same naming convention rules as the `#connect` method. The only difference between the both is that the controller returned by the `#use` method is simpler than the one returned by the `#connect` method, _i.e._ it cannot be used to do anything else like setting up actions, or adding targets, etc.
+
 ## Installation
 Add this line to your application's Gemfile:
 
