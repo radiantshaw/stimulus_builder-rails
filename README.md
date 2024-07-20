@@ -237,6 +237,84 @@ will output:
 </div>
 ```
 
+### Referencing targets
+
+The syntax to an element as a target for a controller is `[controller].[target_name] = [element]`.
+
+For example:
+
+```erb
+<%= stimulated.div do |component| %>
+  <% search = component.connect(:search) %>
+
+  <%= stimulated.input(type: "text") do |input| %>
+    <% search.query = input %>
+  <% end %>
+
+  <%= stimulated.div do |element| %>
+    <% search.error_message = element %>
+  <% end %>
+
+  <%= stimulated.div do |element| %>
+    <% search.results = element %>
+  <% end %>
+<% end %>
+```
+
+will output:
+
+```html
+<div data-controller="search">
+  <input type="text" data-search-target="query">
+  <div data-search-target="errorMessage"></div>
+  <div data-search-target="results"></div>
+</div>
+```
+
+#### Shared targets
+
+You can add same element as a target for different controllers:
+
+```erb
+<%= stimulated.form_for(:users, url: "/users") do |form| %>
+  <% search = form.connect(:search) %>
+  <% checkbox = form.connect(:checkbox) %>
+
+  <%= stimulated.check_box do |input| %>
+    <% search.projects = input %>
+    <% checkbox.input = input %>
+  <% end %>
+
+  <%= stimulated.check_box do |input| %>
+    <% search.messages = input %>
+    <% checkbox.input = input %>
+  <% end %>
+<% end %>
+```
+
+will output:
+
+```html
+<form action="/users" accept-charset="UTF-8" method="post" data-controller="search checkbox">
+  <input type="checkbox" data-search-target="projects" data-checkbox-target="input">
+  <input type="checkbox" data-search-target="messages" data-checkbox-target="input">
+</form>
+```
+
+#### Naming conventions
+
+When target names are more than one word, use `snake_case` for the method names on the `[controller]`:
+
+```erb
+<%= stimulated.div do |component| %>
+  <% search = component.connect(:search) %>
+
+  <% stimulated.span do |element| %>
+    <% search.snake_case = element %>
+  <% end %>
+<% end %>
+```
+
 ## Installation
 Add this line to your application's Gemfile:
 
