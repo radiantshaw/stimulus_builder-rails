@@ -327,7 +327,7 @@ The `#use` method present on the element returns an object that is a logical rep
   <%= stimulated.div(class: "online-user") do |component| %>
     <% component.connect(:user_status)
   <% end %>
-  <# ... %>
+  <%# ... %>
 </div>
 
 <%# ... %>
@@ -343,6 +343,46 @@ The `#use` method present on the element returns an object that is a logical rep
 The above will add a `data-chat-user-status-outlet=".online-user"` attribute on the `div#chat` element.
 
 `#use` accepts a name of the controller to be used as an outlet, and it has the same naming convention rules as the `#connect` method. The only difference between the both is that the controller returned by the `#use` method is simpler than the one returned by the `#connect` method, _i.e._ it cannot be used to do anything else like setting up actions, or adding targets, etc.
+
+### Values
+
+You can pass values to the controller by passing a hash as the second parameter to `#connect`. This hash needs to have the `:values` key present, containing all the values.
+
+```html
+<%= stimulated.div do |component| %>
+  <%
+    component.connect(:loader, {
+      values: { url: "/messages" },
+    })
+  %>
+<% end %>
+```
+
+will output:
+
+```html
+<div data-controller="loader" data-loader-url-value="/messages"></div>
+```
+
+### Classes
+
+You can pass classes (Stimulus classes, not HTML classes) to the controller by passing a hash as the second parameter to `#connect`. This hash needs to have the `:classes` key present, containing all the values.
+
+```html
+<%= stimulated.form_for(:user, url: "/users") do |form| %>
+  <%
+    form.connect(:search, {
+      classes: { loading: "search--busy" },
+    })
+  %>
+<% end %>
+```
+
+will output:
+
+```html
+<form action="/users" data-controller="search" data-search-loading-class="search--busy"></form>
+```
 
 ## Installation
 Add this line to your application's Gemfile:
