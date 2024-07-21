@@ -1,0 +1,7 @@
+<%= stimulated.form_for(:user, url: "/users") do |form| %>
+  <% profile = form.connect(:profile) %>
+
+  <% form.button do |button| %>
+    <% button.fire { profile.show_dialog } %>
+  <% end %>
+<% end %>

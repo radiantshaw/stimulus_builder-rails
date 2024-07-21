@@ -1,0 +1,9 @@
+<%= stimulated.div do |component| %>
+  <% field = component.connect(:field) %>
+  <% search = component.connect(:search) %>
+
+  <%= stimulated.input do |input| %>
+    <% input.on("focus") { field.highlight } %>
+    <% input.fire { search.update } %>
+  <% end %>
+<% end %>

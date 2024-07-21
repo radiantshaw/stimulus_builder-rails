@@ -1,0 +1,9 @@
+<%= stimulated.div do |component| %>
+  <% gallery = component.connect(:gallery) %>
+
+  <% component.on("scroll", passive: false) { gallery.layout } %>
+
+  <%= stimulated.img do |button| %>
+    <% button.fire(capture: true) { gallery.open } %>
+  <% end %>
+<% end %>

@@ -1,0 +1,7 @@
+<%= stimulated.div do |component| %>
+  <% _search = component.connect(:search) %>
+
+  <%= stimulated.span do |element| %>
+    <% _search.camelCase = element %>
+  <% end %>
+<% end %>

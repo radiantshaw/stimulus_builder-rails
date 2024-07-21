@@ -1,0 +1,15 @@
+<%= stimulated.div do |component| %>
+  <% _search = component.connect(:search) %>
+
+  <%= stimulated.input(type: "text") do |element| %>
+    <% _search.query = element %>
+  <% end %>
+
+  <%= stimulated.div do |element| %>
+    <% _search.error_message = element %>
+  <% end %>
+
+  <%= stimulated.div do |element| %>
+    <% _search.results = element %>
+  <% end %>
+<% end %>

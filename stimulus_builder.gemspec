@@ -1,22 +1,16 @@
 require_relative "lib/stimulus_builder/version"
 
 Gem::Specification.new do |spec|
-  spec.name        = "stimulus_builder"
+  spec.name        = "stimulus_builder-rails"
   spec.version     = StimulusBuilder::VERSION
   spec.authors     = ["Nipun Paradkar"]
-  spec.email       = ["nipun@lawlytics.com"]
-  spec.homepage    = "TODO"
-  spec.summary     = "TODO: Summary of StimulusBuilder."
-  spec.description = "TODO: Description of StimulusBuilder."
-    spec.license     = "MIT"
-  
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
-  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
+  spec.email       = ["nipunparadkar123@gmail.com"]
+  spec.homepage    = "https://github.com/radiantshaw/stimulus_builder-rails"
+  spec.summary     = "Add Stimulus attributes using a nicer Ruby syntax."
+  spec.license     = "MIT"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
-  spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+  spec.metadata["source_code_uri"] = spec.homepage
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]

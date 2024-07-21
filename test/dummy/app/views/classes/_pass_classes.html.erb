@@ -1,0 +1,7 @@
+<%= stimulated.form_for(:user, url: "/users") do |component| %>
+  <%
+    component.connect(:search, {
+      classes: { loading: "search--busy" }
+    })
+  %>
+<% end %>
