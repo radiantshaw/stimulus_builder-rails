@@ -24,4 +24,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rails", ">= 7.0.3.1"
   spec.add_dependency "zeitwerk", '~> 2.6'
+  spec.add_development_dependency 'steep', '~> 1.7', '>= 1.7.1'
 end
