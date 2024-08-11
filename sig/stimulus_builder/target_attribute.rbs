@@ -1,0 +1,5 @@
+module StimulusBuilder
+  class TargetAttribute < Attribute
+    def initialize: (Controller identifier, *String target_names) -> void
+  end
+end

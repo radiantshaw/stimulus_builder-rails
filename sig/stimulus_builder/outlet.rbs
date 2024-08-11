@@ -1,0 +1,4 @@
+module StimulusBuilder
+  class Outlet
+  end
+end

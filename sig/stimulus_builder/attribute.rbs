@@ -1,0 +1,4 @@
+module StimulusBuilder
+  class Attribute
+  end
+end

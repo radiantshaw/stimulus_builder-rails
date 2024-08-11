@@ -1,0 +1,7 @@
+type value = (Array[untyped] | TrueClass | FalseClass | Integer | Hash[Symbol, untyped] | String)
+
+module StimulusBuilder
+  class ValueAttribute < Attribute
+    def initialize: (Controller identifier, ::Symbol key, value value) -> void
+  end
+end

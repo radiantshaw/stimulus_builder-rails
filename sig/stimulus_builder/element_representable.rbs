@@ -1,0 +1,5 @@
+module StimulusBuilder
+  module ElementRepresentable
+    def <<: (Attribute attribute) -> untyped
+  end
+end

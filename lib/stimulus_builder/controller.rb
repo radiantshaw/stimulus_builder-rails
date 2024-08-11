@@ -10,11 +10,11 @@ module StimulusBuilder
       @element = element
     end
 
-    def method_missing(action_method, *args)
-      if action_method.ends_with?("=".freeze)
-        args[0] << TargetAttribute.new(self, action_method[..-2])
+    def method_missing(action_method, element = VoidElement.new, **kargs)
+      if action_method.end_with?("=".freeze)
+        element << TargetAttribute.new(self, action_method.to_s.chop)
       else
-        params = args[0] || {}
+        params = kargs || {}
         Handler.new(self, action_method, params)
       end
     end

@@ -1,0 +1,21 @@
+type description = ::Symbol | ::String
+
+module StimulusBuilder
+  class Controller
+    MODULE_SEPARATOR: String
+    IDENTIFIER_SEPARATOR: String
+
+    def initialize: (description controller_name, Element element) -> void
+
+    def to_s: () -> String
+
+    def to_str: () -> String
+
+    def method_missing: (::String action_method, ?StimulusBuilder::Element element) -> Array[untyped]
+      | (::String action_method, **untyped kargs) -> StimulusBuilder::Handler
+
+    private
+
+    def controller_identifier: () -> String
+  end
+end
