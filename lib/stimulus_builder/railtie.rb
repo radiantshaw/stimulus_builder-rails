@@ -1,5 +1,3 @@
-require "stimulus_builder/helper"
-
 module StimulusBuilder
   class Railtie < ::Rails::Railtie
     initializer "stimulus_builder.helper" do
