@@ -1,5 +1,23 @@
 module StimulusBuilder
   module ElementRepresentable
+    def attributes: () -> ::Hash[::String, value]
+
     def <<: (Attribute attribute) -> untyped
+
+    def use: (descriptive controller_name) -> Outlet
+
+    def fire: (**::Hash[::Symbol, bool] options) { () -> Handler } -> ::String
+
+    def on: ((::String | nil) event, ?::Symbol at, **::Hash[::Symbol, bool] options) { () -> Handler } -> ::String
+
+    private
+
+    def create_value_attributes!: (Controller identifier, ::Hash[::Symbol, value] value_props) -> void
+
+    def create_class_attributes!: (Controller identifier, ::Hash[::Symbol, String] class_props) -> void
+
+    def update_attributes!: (Attribute attribute) -> void
+
+    def attribute_index: (Attribute attribute) -> Integer
   end
 end

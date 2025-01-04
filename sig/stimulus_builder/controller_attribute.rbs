@@ -1,0 +1,11 @@
+module StimulusBuilder
+  class ControllerAttribute < Attribute
+    @controllers: ::Array[Controller]
+
+    def initialize: (*Controller controllers) -> void
+
+    def +: (ControllerAttribute controller_attribute) -> ControllerAttribute
+
+    attr_reader controllers: ::Array[Controller]
+  end
+end

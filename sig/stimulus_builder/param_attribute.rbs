@@ -1,0 +1,7 @@
+module StimulusBuilder
+  class ParamAttribute < Attribute
+    def initialize: (Controller identifier, descriptive logical_name, String param) -> void
+
+    private def dasherized_name: () -> String
+  end
+end

@@ -1,5 +1,7 @@
 module StimulusBuilder
   class Handler
     def initialize: (Controller controller, (::String | ::Symbol) action_method, ::Hash[::Symbol, untyped] params) -> void
+
+    def param_attributes: () -> ::Array[ParamAttribute]
   end
 end

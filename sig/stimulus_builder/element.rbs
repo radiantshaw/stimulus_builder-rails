@@ -1,5 +1,11 @@
 module StimulusBuilder
   class Element
     include ElementRepresentable
+
+    @attributes: ::Array[Attribute]
+
+    def initialize: () -> void
+
+    def to_s: () -> String
   end
 end

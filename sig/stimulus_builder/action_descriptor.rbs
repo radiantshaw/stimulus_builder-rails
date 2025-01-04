@@ -1,0 +1,9 @@
+module StimulusBuilder
+  class ActionDescriptor
+    def initialize: ((::String | nil) event, Handler handler, ::Symbol target, **::Hash[::Symbol, bool] options) -> void
+
+    def to_s: () -> String
+
+    private def processed_options: () -> String
+  end
+end

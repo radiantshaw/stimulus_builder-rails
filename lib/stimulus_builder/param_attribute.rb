@@ -1,18 +1,16 @@
 module StimulusBuilder
   class ParamAttribute < Attribute
-    attr_reader :value
-
-    def initialize(identifier, name, value)
+    def initialize(identifier, name, param)
       @identifier = identifier
-      @name, @value = name.to_s, value
+      @name, @param = name.to_s, param
     end
 
     def name
       "data-#{@identifier}-#{dasherized_name}-param"
     end
 
-    def to_hash
-      { name => value }
+    def value
+      @param
     end
 
     private
