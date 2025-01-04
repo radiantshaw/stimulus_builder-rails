@@ -1,11 +1,15 @@
 module StimulusBuilder
   class Attribute
-    def to_hash
-      { name => value }
-    end
-
     def multi?
       false
+    end
+
+    def name
+      raise NotImplementedError
+    end
+
+    def value
+      raise NotImplementedError
     end
   end
 end

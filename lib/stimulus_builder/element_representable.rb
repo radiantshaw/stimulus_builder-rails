@@ -2,7 +2,7 @@ module StimulusBuilder
   module ElementRepresentable
     def attributes
       @attributes.inject({}) do |memo, attribute|
-        memo.merge(attribute)
+        memo.merge({ attribute.name => attribute.value })
       end
     end
 

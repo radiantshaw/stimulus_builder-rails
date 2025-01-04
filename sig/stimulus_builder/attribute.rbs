@@ -1,4 +1,9 @@
 module StimulusBuilder
   class Attribute
+    def multi?: () -> bool
+
+    def name: () -> String
+
+    def value: () -> String
   end
 end

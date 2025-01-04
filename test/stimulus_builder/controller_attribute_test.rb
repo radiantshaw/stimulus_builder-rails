@@ -4,21 +4,28 @@ require "stimulus_builder/controller"
 require "stimulus_builder/controller_attribute"
 
 class ControllerAttributeTest < ActiveSupport::TestCase
-  test "represents a data-controller attribute with minimum one controller present" do
+  test "is named `data-controller`" do
     controller = StimulusBuilder::Controller.new(:display, element)
     controller_attribute = StimulusBuilder::ControllerAttribute.new(controller)
 
-    assert_equal({ "data-controller" => "display" }, controller_attribute.to_hash)
+    assert_equal("data-controller", controller_attribute.name)
   end
 
-  test "accepts more controllers and also preserves the order" do
+  test "returns the given controller name as value" do
+    controller = StimulusBuilder::Controller.new(:display, element)
+    controller_attribute = StimulusBuilder::ControllerAttribute.new(controller)
+
+    assert_equal("display", controller_attribute.value)
+  end
+
+  test "separates multiple controllers with a space, preserving order" do
     controllers = [
       StimulusBuilder::Controller.new(:display, element),
       StimulusBuilder::Controller.new(:animation, element)
     ]
     controller_attribute = StimulusBuilder::ControllerAttribute.new(*controllers)
 
-    assert_equal({ "data-controller" => "display animation" }, controller_attribute.to_hash)
+    assert_equal("display animation", controller_attribute.value)
   end
 
   private
