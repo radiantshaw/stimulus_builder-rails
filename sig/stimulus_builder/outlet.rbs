@@ -3,10 +3,11 @@ module StimulusBuilder
     MODULE_SEPARATOR: ::String
     IDENTIFIER_SEPARATOR: ::String
 
-    # FIXME: This should be a `String`. But the RBS file for `ActiveSupport` is not available.
-    @name: untyped
+    @name: ::String
 
     def initialize: (descriptive name) -> void
+
+    def to_s: () -> String
 
     private def identifier: () -> String
   end

@@ -1,11 +1,9 @@
 module StimulusBuilder
   class ClassAttribute < Attribute
     @identifier: Controller
-    # FIXME: This should be a `String`. But we can't express that in RBS, as the `dasherize`
-    # method is provided by `ActiveSupport`.
-    @logical_name: untyped
-    @klass: String
+    @logical_name: ::String
+    @klass: ::String
 
-    def initialize: (Controller identifier, descriptive logical_name, String klass) -> void
+    def initialize: (Controller identifier, descriptive logical_name, ::String klass) -> void
   end
 end

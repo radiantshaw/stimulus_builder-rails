@@ -1,13 +1,9 @@
 module StimulusBuilder
   class ActionAttribute < Attribute
-    # FIXME: This should be an `::Array[ActionDescriptor]`. But needs RBS files from `ActiveSupport`.
-    @action_descriptors: untyped
-
     def initialize: (*ActionDescriptor action_descriptors) -> void
 
     def +: (ActionAttribute action_attribute) -> ActionAttribute
 
-    # FIXME: This should be an `::Array[ActionDescriptor]`. But needs RBS files from `ActiveSupport`.
-    attr_reader action_descriptors: untyped
+    attr_reader action_descriptors: ::Array[ActionDescriptor]
   end
 end

@@ -3,9 +3,7 @@ module StimulusBuilder
     MODULE_SEPARATOR: String
     IDENTIFIER_SEPARATOR: String
 
-    # FIXME: This should be a `String`. But Steep complains about passing the `&:dasherize` argument
-    # to `map` below.
-    @controller_name: untyped
+    @controller_name: ::String
     @element: Element
 
     def initialize: (descriptive controller_name, ElementRepresentable element) -> void
@@ -13,9 +11,7 @@ module StimulusBuilder
     def method_missing: (::String action_method, ?StimulusBuilder::Element element) -> Array[untyped]
       | (::String action_method, **untyped kargs) -> StimulusBuilder::Handler
 
-    # FIXME: `event_name` should be a `descriptive`. But it complains about the `dasharize` method as
-    # its provided by `ActiveSupport`, which is not available in RBS.
-    def []: (untyped event_name) -> ::String
+    def []: (descriptive event_name) -> ::String
 
     def []=: (::String selector, Outlet outlet) -> void
 
